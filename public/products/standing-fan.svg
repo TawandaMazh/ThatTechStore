@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640" fill="none">
+  <rect width="640" height="640" rx="48" fill="#0E1420"/>
+  <circle cx="320" cy="280" r="120" fill="#3D8BFF" fill-opacity="0.18"/>
+  <circle cx="320" cy="280" r="72" stroke="#3D8BFF" stroke-width="8" fill="none"/>
+  <text x="320" y="290" text-anchor="middle" font-family="system-ui,sans-serif" font-size="36" font-weight="700" fill="#3D8BFF">Fan</text>
+  <text x="320" y="480" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" fill="#8B95A8">ThatTechStore</text>
+</svg>
