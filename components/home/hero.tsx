@@ -64,7 +64,7 @@ export function Hero({ hero }: HeroProps) {
       <div className="relative mx-auto flex min-h-[min(100svh,920px)] w-full max-w-6xl flex-col justify-end px-4 pb-16 pt-[calc(var(--header-h)+2rem)] sm:px-6 sm:pb-20 lg:justify-center lg:px-8 lg:pb-24">
         <div className="max-w-xl lg:max-w-2xl">
           <motion.p
-            className="font-display text-2xl font-bold tracking-tight text-text sm:text-3xl md:text-4xl"
+            className="font-display text-4xl font-bold tracking-tight text-text sm:text-5xl md:text-6xl lg:text-7xl"
             initial={reduced ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -73,7 +73,7 @@ export function Hero({ hero }: HeroProps) {
           </motion.p>
 
           <motion.h1
-            className="mt-4 font-display text-3xl font-semibold leading-[1.1] tracking-tight text-text sm:text-4xl md:text-5xl lg:text-[3.25rem]"
+            className="mt-5 font-display text-xl font-semibold leading-snug tracking-tight text-text sm:text-2xl md:text-3xl"
             initial={reduced ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
