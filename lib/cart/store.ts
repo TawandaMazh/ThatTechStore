@@ -3,6 +3,7 @@ import { readCart, writeCart } from "@/lib/cart/storage";
 
 type Listener = () => void;
 
+const EMPTY_CART: CartItem[] = [];
 let memory: CartItem[] | null = null;
 const listeners = new Set<Listener>();
 
@@ -11,13 +12,13 @@ function emit() {
 }
 
 export function getCartSnapshot(): CartItem[] {
-  if (typeof window === "undefined") return [];
+  if (typeof window === "undefined") return EMPTY_CART;
   if (memory == null) memory = readCart();
   return memory;
 }
 
 export function getServerCartSnapshot(): CartItem[] {
-  return [];
+  return EMPTY_CART;
 }
 
 export function subscribeCart(listener: Listener) {

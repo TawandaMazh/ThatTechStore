@@ -34,6 +34,14 @@ function subscribeHydration() {
   return () => {};
 }
 
+function getClientReady() {
+  return true;
+}
+
+function getServerReady() {
+  return false;
+}
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const items = useSyncExternalStore(
     subscribeCart,
@@ -42,8 +50,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
   const ready = useSyncExternalStore(
     subscribeHydration,
-    () => true,
-    () => false,
+    getClientReady,
+    getServerReady,
   );
   const [, startTransition] = useTransition();
 
