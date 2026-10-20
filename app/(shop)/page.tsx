@@ -5,18 +5,21 @@ import { Trust } from "@/components/home/trust";
 import { Reviews } from "@/components/home/reviews";
 import { getSeasonHero } from "@/lib/seasons";
 import { siteSettings } from "@/lib/mock/site-settings";
-import { categories } from "@/lib/mock/categories";
-import { bestSellers } from "@/lib/mock/products";
 import { reviews } from "@/lib/mock/reviews";
+import { getFeaturedProducts, listCategories } from "@/lib/catalog/queries";
 
-export default function HomePage() {
+export default async function HomePage() {
   const hero = getSeasonHero(siteSettings, new Date());
+  const [{ categories }, { products }] = await Promise.all([
+    listCategories(),
+    getFeaturedProducts(6),
+  ]);
 
   return (
     <>
       <Hero hero={hero} />
       <Categories categories={categories} />
-      <BestSellers products={bestSellers} />
+      <BestSellers products={products} />
       <Trust />
       <Reviews reviews={reviews} />
     </>

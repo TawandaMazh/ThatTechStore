@@ -2,13 +2,15 @@
 
 Premium tech storefront for Lusaka — cooling, power backup, storm gear, and IMEI-checked phones.
 
-**Phase 1** (this branch): Next.js App Router + TypeScript + Tailwind design system, dark-first blue theme with light mode, Motion + Lenis (desktop), and an animated home page with seasonal hero + mock content.
+**Phase 2** (current): Supabase catalog schema + RLS + seed (12 products), `/products` filters & search, product detail pages, and a client cart (localStorage + optional guest sync). Dark-first blue theme from Phase 1 is preserved.
 
-Later phases: Supabase catalog/auth, cart & checkout, owner/delivery dashboards, payments (mock → Flutterwave), Vercel deploy.
+Later phases: checkout & payments, owner/delivery dashboards, Flutterwave, Vercel deploy.
+
+See `docs/PHASE2.md` for SQL seed steps.
 
 ---
 
-## Windows setup (Phase 1)
+## Windows setup
 
 ### 1. Install Node.js (if needed)
 
@@ -29,21 +31,32 @@ cd ThatTechStore
 npm install
 ```
 
-### 3. Env file (optional for Phase 1)
+### 3. Env file
 
 ```bat
 copy .env.example .env.local
+notepad .env.local
 ```
 
-To force a seasonal hero regardless of date, set in `.env.local`:
+Set:
 
 ```
-NEXT_PUBLIC_FORCE_SEASON=heat
+NEXT_PUBLIC_SUPABASE_URL=https://xvsblrksjycreicjvuui.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=paste-your-anon-jwt-here
 ```
 
-Valid values: `heat` | `storms` | `outages`
+Optional seasonal hero override: `NEXT_PUBLIC_FORCE_SEASON=heat` (`heat` | `storms` | `outages`).
 
-### 4. Run the dev server
+### 4. Apply catalog SQL (once)
+
+In Supabase Dashboard → **SQL Editor**:
+
+1. Run `supabase/migrations/20261020100000_phase2_catalog.sql`
+2. Run `supabase/seed.sql`
+
+Until seed runs, the app falls back to a built-in demo catalog of the same 12 products.
+
+### 5. Run the dev server
 
 ```bat
 npm run dev
@@ -51,19 +64,16 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
-### 5. What to check visually
+### 6. What to check visually
 
-- [ ] **Brand** “ThatTechStore” is large in the hero (not only in the nav)
-- [ ] **Seasonal hero** matches date (or `NEXT_PUBLIC_FORCE_SEASON`) — heat / storms / outages
-- [ ] **Dark mode** by default; **theme toggle** switches light/dark
-- [ ] **Shop by problem** — Too hot, Power cuts, Storms, Phones
-- [ ] **Best sellers** strip (6 mock products)
-- [ ] **Trust** — warranty, IMEI checked, delivery across Lusaka
-- [ ] **Reviews** — mock quotes
-- [ ] **No WhatsApp CTA** on the home page
-- [ ] **Motion** — page fade/slide, section reveals, button hover (desktop)
-- [ ] **Smooth scroll** on desktop; normal scroll on phone
-- [ ] Mobile layout OK at ~360px width
+- [ ] Home best sellers + category links open real `/products` filters
+- [ ] `/products` — search, category, min/max price, in-stock filter
+- [ ] PDP — gallery, price, stock, specs, “what problem it solves”, related
+- [ ] Phone PDPs — battery health + IMEI/warranty panel
+- [ ] Add to cart → `/cart` + header badge
+- [ ] **No WhatsApp** “Ask a question” (number not configured)
+- [ ] Delivery copy: all Lusaka areas
+- [ ] Dark-first blue theme; motion + reduced-motion respected
 
 ### Scripts
 
@@ -76,15 +86,15 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## Project layout (Phase 1)
+## Project layout (Phase 2)
 
 ```
-app/(shop)/          # home + product placeholders
-components/ui/       # Button, Container, Skeleton, ThemeToggle…
-components/home/     # Hero, categories, best sellers, trust, reviews
-components/motion/   # Page transition, reveal, Lenis
-lib/mock/            # Seasonal hero, products, reviews (no DB yet)
-docs/PHASE1.md       # Phase 1 checklist
+app/(shop)/products/   # listing + PDP
+app/(shop)/cart/       # cart UI
+components/product/    # card, filters, gallery, specs
+components/cart/       # provider + cart view
+lib/catalog/           # Supabase queries + mock fallback
+supabase/migrations/   # schema + RLS
+supabase/seed.sql      # 12 products
+docs/PHASE2.md         # SQL + checklist
 ```
-
-See `docs/PHASE1.md` for the handoff checklist.
