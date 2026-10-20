@@ -1,0 +1,55 @@
+import type { Product } from "@/types";
+
+export const bestSellers: Product[] = [
+  {
+    id: "1",
+    name: "Standing Fan Pro 18\"",
+    slug: "standing-fan-pro-18",
+    priceZmw: 890,
+    problemSolved: "Too hot",
+    category: "too-hot",
+    badge: "Best seller",
+  },
+  {
+    id: "2",
+    name: "1.5kVA Hybrid Inverter",
+    slug: "hybrid-inverter-1-5kva",
+    priceZmw: 4850,
+    problemSolved: "Power cuts",
+    category: "power-cuts",
+    badge: "In stock",
+  },
+  {
+    id: "3",
+    name: "Surge Guard 6-Way",
+    slug: "surge-guard-6-way",
+    priceZmw: 320,
+    problemSolved: "Storms",
+    category: "storms",
+  },
+  {
+    id: "4",
+    name: "iPhone 13 128GB",
+    slug: "iphone-13-128gb",
+    priceZmw: 6200,
+    problemSolved: "Phones",
+    category: "phones",
+    badge: "IMEI checked",
+  },
+  {
+    id: "5",
+    name: "Portable AC 9000 BTU",
+    slug: "portable-ac-9000",
+    priceZmw: 7900,
+    problemSolved: "Too hot",
+    category: "too-hot",
+  },
+  {
+    id: "6",
+    name: "100Ah Lithium Battery",
+    slug: "lithium-battery-100ah",
+    priceZmw: 5400,
+    problemSolved: "Power cuts",
+    category: "power-cuts",
+  },
+];

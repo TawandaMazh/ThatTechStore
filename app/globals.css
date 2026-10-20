@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+/* ── ThatTechStore design tokens ───────────────────────────────────────────
+   Dark-first navy + electric blue. Soft neutrals, generous radius, subtle depth.
+   Accent: #3D8BFF (electric blue). Display: Syne. Body: Outfit.
+─────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  color-scheme: dark;
+
+  --bg: #070b12;
+  --bg-elevated: #0e1420;
+  --surface: #121a28;
+  --surface-hover: #182233;
+  --border: color-mix(in oklab, #ffffff 10%, transparent);
+  --border-strong: color-mix(in oklab, #ffffff 16%, transparent);
+
+  --text: #f2f5fa;
+  --text-muted: #8b95a8;
+  --text-subtle: #5c6678;
+
+  --accent: #3d8bff;
+  --accent-hover: #5a9dff;
+  --accent-muted: color-mix(in oklab, #3d8bff 18%, transparent);
+  --accent-glow: color-mix(in oklab, #3d8bff 28%, transparent);
+
+  --success: #3ecf8e;
+  --warning: #f0b429;
+  --danger: #f07178;
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+
+  --shadow-soft: 0 8px 32px color-mix(in oklab, #000000 45%, transparent);
+  --shadow-glow: 0 0 48px var(--accent-glow);
+
+  --header-h: 4rem;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 180ms;
+  --dur-med: 400ms;
+  --dur-slow: 560ms;
+
+  --background: var(--bg);
+  --foreground: var(--text);
+}
+
+html.light {
+  color-scheme: light;
+
+  --bg: #f4f7fb;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-hover: #eef2f8;
+  --border: color-mix(in oklab, #0b1220 10%, transparent);
+  --border-strong: color-mix(in oklab, #0b1220 16%, transparent);
+
+  --text: #0b1220;
+  --text-muted: #5a6578;
+  --text-subtle: #8a93a3;
+
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-muted: color-mix(in oklab, #2563eb 12%, transparent);
+  --accent-glow: color-mix(in oklab, #2563eb 18%, transparent);
+
+  --shadow-soft: 0 8px 28px color-mix(in oklab, #0b1220 8%, transparent);
+  --shadow-glow: 0 0 40px var(--accent-glow);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-muted: var(--accent-muted);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --font-sans: var(--font-outfit);
+  --font-display: var(--font-syne);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-outfit), ui-sans-serif, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Atmospheric base — soft radial depth, not flat */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(
+      900px 500px at 15% -10%,
+      color-mix(in oklab, var(--accent) 14%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 420px at 90% 10%,
+      color-mix(in oklab, #1a3a6e 35%, transparent),
+      transparent 55%
+    ),
+    var(--bg);
+}
+
+.font-display {
+  font-family: var(--font-syne), ui-sans-serif, sans-serif;
+}
+
+::selection {
+  background: var(--accent-muted);
+  color: var(--text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.skeleton {
+  background: color-mix(in oklab, var(--text-subtle) 28%, var(--surface));
+  animation: skeleton-pulse 1.4s var(--ease-out) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    opacity: 0.6;
+  }
+}
