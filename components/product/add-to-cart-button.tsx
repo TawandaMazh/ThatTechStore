@@ -8,17 +8,23 @@ import { useCart } from "@/components/cart/cart-provider";
 interface AddToCartButtonProps {
   product: Product;
   disabled?: boolean;
+  className?: string;
 }
 
-export function AddToCartButton({ product, disabled }: AddToCartButtonProps) {
+export function AddToCartButton({
+  product,
+  disabled,
+  className,
+}: AddToCartButtonProps) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
+  const label = product.isPreorder ? "Pre-order with deposit" : "Add to cart";
 
   return (
     <Button
       variant="primary"
       size="lg"
-      className="w-full sm:w-auto"
+      className={className ?? "w-full sm:w-auto"}
       disabled={disabled}
       onClick={() => {
         addItem(product, 1);
@@ -26,7 +32,7 @@ export function AddToCartButton({ product, disabled }: AddToCartButtonProps) {
         window.setTimeout(() => setAdded(false), 1600);
       }}
     >
-      {added ? "Added to cart" : "Add to cart"}
+      {added ? "Added to cart" : label}
     </Button>
   );
 }

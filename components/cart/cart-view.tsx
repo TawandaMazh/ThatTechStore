@@ -5,10 +5,12 @@ import { useCart } from "@/components/cart/cart-provider";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProductImage } from "@/components/product/product-image";
+import { computeCartTotals } from "@/lib/orders/totals";
 import { formatZmw } from "@/lib/utils";
 
 export function CartView() {
-  const { items, subtotalZmw, ready, setQuantity, removeItem } = useCart();
+  const { items, ready, setQuantity, removeItem } = useCart();
+  const totals = computeCartTotals(items);
 
   if (!ready) {
     return (
@@ -65,6 +67,7 @@ export function CartView() {
               </Link>
               <p className="mt-1 text-sm text-text-muted">
                 {formatZmw(item.priceZmw)} each
+                {item.isPreorder ? " · Pre-order" : ""}
               </p>
               <div className="mt-3 flex flex-wrap items-center gap-3">
                 <label className="flex items-center gap-2 text-sm text-text-muted">
@@ -97,30 +100,31 @@ export function CartView() {
 
       <aside className="h-fit rounded-[var(--radius-lg)] border border-border bg-surface p-5">
         <p className="font-display text-lg font-semibold text-text">Summary</p>
-        <div className="mt-4 flex justify-between text-sm">
-          <span className="text-text-muted">Subtotal</span>
-          <span className="font-semibold text-text">
-            {formatZmw(subtotalZmw)}
-          </span>
+        <div className="mt-4 space-y-2 text-sm">
+          <div className="flex justify-between">
+            <span className="text-text-muted">Subtotal</span>
+            <span className="font-semibold text-text">
+              {formatZmw(totals.subtotalZmw)}
+            </span>
+          </div>
+          {totals.hasPreorder ? (
+            <div className="flex justify-between">
+              <span className="text-text-muted">Deposit due now</span>
+              <span className="font-semibold text-text">
+                {formatZmw(totals.amountDueZmw)}
+              </span>
+            </div>
+          ) : null}
         </div>
         <p className="mt-3 text-xs leading-relaxed text-text-subtle">
-          Delivery across all Lusaka areas. Checkout and payments arrive in
-          Phase 3 — for now you can keep shopping.
+          Delivery across all Lusaka areas. Pre-order deposits are charged now;
+          balance on arrival.
         </p>
-        <Button
-          href="/products"
-          variant="secondary"
-          className="mt-5 w-full"
-        >
-          Continue shopping
+        <Button href="/checkout" variant="primary" className="mt-5 w-full">
+          Checkout
         </Button>
-        <Button
-          variant="primary"
-          className="mt-3 w-full"
-          disabled
-          title="Checkout ships in Phase 3"
-        >
-          Checkout soon
+        <Button href="/products" variant="secondary" className="mt-3 w-full">
+          Continue shopping
         </Button>
       </aside>
     </div>

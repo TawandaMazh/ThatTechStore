@@ -42,6 +42,8 @@ export interface Product {
   description?: string;
   stockQty?: number;
   isPreorder?: boolean;
+  /** Deposit due now when isPreorder; balance on arrival. */
+  preorderDepositZmw?: number | null;
   images?: string[];
   specs?: ProductSpecs;
   badge?: string;
@@ -93,4 +95,68 @@ export interface CartItem {
   priceZmw: number;
   image?: string;
   quantity: number;
+  isPreorder?: boolean;
+  /** Per-unit deposit when pre-ordering. */
+  preorderDepositZmw?: number | null;
+}
+
+export type PaymentMethod =
+  | "mtn_momo"
+  | "airtel"
+  | "zamtel"
+  | "card"
+  | "cod";
+
+export type OrderStatus =
+  | "pending"
+  | "paid"
+  | "out_for_delivery"
+  | "delivered"
+  | "returned";
+
+export type PaymentStatus =
+  | "pending"
+  | "processing"
+  | "succeeded"
+  | "failed";
+
+export interface OrderItem {
+  id: string;
+  productId?: string | null;
+  productName: string;
+  productSlug: string;
+  unitPriceZmw: number;
+  quantity: number;
+  isPreorder: boolean;
+  depositZmw?: number | null;
+}
+
+export interface PaymentRecord {
+  id?: string;
+  provider: string;
+  method: PaymentMethod;
+  amountZmw: number;
+  status: PaymentStatus;
+  providerRef: string;
+}
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  customerPhone: string;
+  deliveryArea: string;
+  address: string;
+  status: OrderStatus;
+  paymentMethod: PaymentMethod;
+  subtotalZmw: number;
+  depositZmw: number;
+  amountDueZmw: number;
+  notes?: string | null;
+  paidAt?: string | null;
+  outForDeliveryAt?: string | null;
+  deliveredAt?: string | null;
+  createdAt: string;
+  items: OrderItem[];
+  payment?: PaymentRecord | null;
 }

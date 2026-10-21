@@ -60,8 +60,10 @@ export const mockProducts: Product[] = [
     problemSolved: "Real cooling for bedrooms and small offices when fans are not enough.",
     category: "too-hot",
     description:
-      "Self-contained portable air conditioner with window kit. Moves cool air into one room without permanent install.",
-    stockQty: 4,
+      "Self-contained portable air conditioner with window kit. Moves cool air into one room without permanent install. Arriving on the next Dubai shipment — reserve with a deposit.",
+    stockQty: 0,
+    isPreorder: true,
+    preorderDepositZmw: 2000,
     images: ["/products/portable-ac.svg"],
     specs: {
       cooling: "9000 BTU",
@@ -69,6 +71,7 @@ export const mockProducts: Product[] = [
       modes: ["cool", "fan", "dehumidify"],
       exhaust: "window kit included",
     },
+    badge: "Next shipment",
     featured: false,
   },
   {
@@ -158,8 +161,10 @@ export const mockProducts: Product[] = [
     problemSolved: "Stores enough energy for lights, phone charging, and a fridge overnight.",
     category: "power-cuts",
     description:
-      "LiFePO4 battery pack sized for evening backup with a matching inverter. Longer cycle life than lead-acid.",
-    stockQty: 5,
+      "LiFePO4 battery pack sized for evening backup with a matching inverter. Longer cycle life than lead-acid. Next shipment from Dubai — pay a deposit to secure one.",
+    stockQty: 0,
+    isPreorder: true,
+    preorderDepositZmw: 1500,
     images: ["/products/lithium-battery.svg"],
     specs: {
       chemistry: "LiFePO4",
@@ -167,6 +172,7 @@ export const mockProducts: Product[] = [
       voltage: "12.8V",
       cycles: ">3000",
     },
+    badge: "Next shipment",
     featured: true,
   },
   {

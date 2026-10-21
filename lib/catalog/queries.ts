@@ -51,7 +51,7 @@ export async function listProducts(filters: ProductFilters = {}): Promise<{
   let query = supabase
     .from("products")
     .select(
-      "id, category_id, name, slug, price_zmw, description, problem_solved, stock_qty, is_preorder, images, specs, badge, featured, active, categories(key, title)",
+      "id, category_id, name, slug, price_zmw, description, problem_solved, stock_qty, is_preorder, preorder_deposit, images, specs, badge, featured, active, categories(key, title)",
     )
     .eq("active", true)
     .order("featured", { ascending: false })
@@ -118,7 +118,7 @@ export async function getFeaturedProducts(limit = 6): Promise<{
   const { data, error } = await supabase
     .from("products")
     .select(
-      "id, category_id, name, slug, price_zmw, description, problem_solved, stock_qty, is_preorder, images, specs, badge, featured, active, categories(key, title)",
+      "id, category_id, name, slug, price_zmw, description, problem_solved, stock_qty, is_preorder, preorder_deposit, images, specs, badge, featured, active, categories(key, title)",
     )
     .eq("active", true)
     .eq("featured", true)
@@ -143,7 +143,7 @@ export async function getProductBySlug(
   const { data, error } = await supabase
     .from("products")
     .select(
-      "id, category_id, name, slug, price_zmw, description, problem_solved, stock_qty, is_preorder, images, specs, badge, featured, active, categories(key, title)",
+      "id, category_id, name, slug, price_zmw, description, problem_solved, stock_qty, is_preorder, preorder_deposit, images, specs, badge, featured, active, categories(key, title)",
     )
     .eq("slug", slug)
     .eq("active", true)
@@ -174,7 +174,7 @@ export async function getProductBySlug(
     supabase
       .from("products")
       .select(
-        "id, category_id, name, slug, price_zmw, description, problem_solved, stock_qty, is_preorder, images, specs, badge, featured, active, categories(key, title)",
+        "id, category_id, name, slug, price_zmw, description, problem_solved, stock_qty, is_preorder, preorder_deposit, images, specs, badge, featured, active, categories(key, title)",
       )
       .eq("active", true)
       .eq("category_id", product.categoryId!)
@@ -195,4 +195,26 @@ export async function getProductBySlug(
     },
     source: "supabase",
   };
+}
+
+export async function listPreorderProducts(): Promise<Product[]> {
+  const supabase = await getServerSupabase();
+  if (!supabase) {
+    return filterMockProducts({}).filter((p) => p.isPreorder);
+  }
+
+  const { data, error } = await supabase
+    .from("products")
+    .select(
+      "id, category_id, name, slug, price_zmw, description, problem_solved, stock_qty, is_preorder, preorder_deposit, images, specs, badge, featured, active, categories(key, title)",
+    )
+    .eq("active", true)
+    .eq("is_preorder", true)
+    .order("name", { ascending: true });
+
+  if (error || !data?.length) {
+    return filterMockProducts({}).filter((p) => p.isPreorder);
+  }
+
+  return data.map(mapProduct);
 }

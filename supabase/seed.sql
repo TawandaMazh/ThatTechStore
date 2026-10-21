@@ -238,4 +238,23 @@ insert into public.reviews (product_id, author, rating, body, location, approved
   ('b2000000-0000-4000-8000-000000000011', 'Brian T.', 5, 'A54 looks nearly new. Delivery to Makeni was quick.', 'Makeni', true),
   ('b2000000-0000-4000-8000-000000000006', 'Natasha P.', 4, 'Lamp kit saved homework night when power went mid-rain.', 'Kabulonga', true);
 
+-- Phase 3: next-shipment pre-orders (deposit at checkout)
+update public.products
+set
+  is_preorder = true,
+  preorder_deposit = 2000,
+  stock_qty = 0,
+  badge = 'Next shipment',
+  description = description || ' Arriving on the next Dubai shipment — reserve with a deposit.'
+where slug = 'portable-ac-9000';
+
+update public.products
+set
+  is_preorder = true,
+  preorder_deposit = 1500,
+  stock_qty = 0,
+  badge = 'Next shipment',
+  description = description || ' Next shipment from Dubai — pay a deposit to secure one.'
+where slug = 'lithium-battery-100ah';
+
 commit;
