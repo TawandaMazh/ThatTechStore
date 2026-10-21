@@ -85,6 +85,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               priceZmw: product.priceZmw,
               image: product.images?.[0],
               quantity,
+              isPreorder: Boolean(product.isPreorder),
+              preorderDepositZmw: product.preorderDepositZmw ?? null,
             },
           ];
       persist(next);

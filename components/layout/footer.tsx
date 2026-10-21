@@ -47,8 +47,16 @@ export function Footer() {
           <div>
             <p className="font-medium text-text">Info</p>
             <ul className="mt-3 space-y-2 text-text-muted">
-              <li>Warranty supported</li>
-              <li>IMEI checked phones</li>
+              <li>
+                <Link href="/track" className="hover:text-text">
+                  Track order
+                </Link>
+              </li>
+              <li>
+                <Link href="/pre-order" className="hover:text-text">
+                  Pre-order
+                </Link>
+              </li>
               <li>Delivery: all Lusaka</li>
             </ul>
           </div>

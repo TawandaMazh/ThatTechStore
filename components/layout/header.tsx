@@ -9,8 +9,8 @@ import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 const nav = [
   { href: "/products", label: "Shop" },
-  { href: "/products?category=power-cuts", label: "Power" },
-  { href: "/products?category=phones", label: "Phones" },
+  { href: "/pre-order", label: "Pre-order" },
+  { href: "/track", label: "Track" },
 ];
 
 export function Header() {

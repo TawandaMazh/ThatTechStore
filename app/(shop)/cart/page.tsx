@@ -12,7 +12,7 @@ export default function CartPage() {
     <Container className="py-10 sm:py-14">
       <SectionHeading
         title="Cart"
-        description="Saved on this device. Checkout comes in Phase 3 — we deliver across all Lusaka areas."
+        description="Saved on this device. Delivery across all Lusaka areas."
       />
       <div className="mt-8">
         <CartView />

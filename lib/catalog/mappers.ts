@@ -25,6 +25,7 @@ type ProductRow = {
   problem_solved: string | null;
   stock_qty: number;
   is_preorder: boolean;
+  preorder_deposit?: number | string | null;
   images: string[] | null;
   specs: ProductSpecs | null;
   badge: string | null;
@@ -80,6 +81,8 @@ export function mapProduct(row: ProductRow): Product {
     description: row.description ?? "",
     stockQty: row.stock_qty,
     isPreorder: row.is_preorder,
+    preorderDepositZmw:
+      row.preorder_deposit == null ? null : Number(row.preorder_deposit),
     images: row.images ?? [],
     specs: row.specs ?? {},
     badge: row.badge ?? undefined,
