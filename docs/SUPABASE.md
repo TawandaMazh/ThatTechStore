@@ -1,6 +1,6 @@
 # Supabase connectivity (client + env)
 
-Wires `@supabase/supabase-js` + `@supabase/ssr` for the Next.js App Router. **No catalog schema yet** — that is Phase 2.
+Wires `@supabase/supabase-js` + `@supabase/ssr` for the Next.js App Router. Catalog/orders schema: see `PHASE2.md` and `PHASE3.md`.
 
 ## Windows: create `.env.local`
 
