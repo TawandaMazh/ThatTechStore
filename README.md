@@ -2,11 +2,11 @@
 
 Premium tech storefront for Lusaka — cooling, power backup, storm gear, and IMEI-checked phones.
 
-**Phase 2** (current): Supabase catalog schema + RLS + seed (12 products), `/products` filters & search, product detail pages, and a client cart (localStorage + optional guest sync). Dark-first blue theme from Phase 1 is preserved.
+**Phase 3** (this branch): checkout (Lusaka free-text area + phone + payment method), mock payments (MoMo / Airtel / Zamtel / card / COD) with webhook-trusted paid status, `/order/[orderNumber]`, `/track`, and pre-order deposits. Phase 2 catalog + cart remain.
 
-Later phases: checkout & payments, owner/delivery dashboards, Flutterwave, Vercel deploy.
+Later phases: owner/delivery dashboards, real Flutterwave, Vercel deploy.
 
-See `docs/PHASE2.md` for SQL seed steps.
+See `docs/PHASE3.md` (and `docs/PHASE2.md` for catalog SQL).
 
 ---
 
@@ -43,18 +43,22 @@ Set:
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://xvsblrksjycreicjvuui.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=paste-your-anon-jwt-here
+PAYMENT_PROVIDER=mock
+MOCK_WEBHOOK_SECRET=thattechstore-mock-webhook-dev
 ```
 
 Optional seasonal hero override: `NEXT_PUBLIC_FORCE_SEASON=heat` (`heat` | `storms` | `outages`).
 
-### 4. Apply catalog SQL (once)
+### 4. Apply SQL (once)
 
 In Supabase Dashboard → **SQL Editor**:
 
 1. Run `supabase/migrations/20261020100000_phase2_catalog.sql`
 2. Run `supabase/seed.sql`
+3. Run `supabase/migrations/20261020200000_phase3_orders.sql`
+4. Insert `app_config` webhook secret (see `docs/PHASE3.md`)
 
-Until seed runs, the app falls back to a built-in demo catalog of the same 12 products.
+Until Phase 2 seed runs, the catalog falls back to a built-in demo. Until Phase 3 SQL runs, orders use an in-memory mock store (resets when the server stops).
 
 ### 5. Run the dev server
 
@@ -70,7 +74,10 @@ Open [http://localhost:3000](http://localhost:3000)
 - [ ] `/products` — search, category, min/max price, in-stock filter
 - [ ] PDP — gallery, price, stock, specs, “what problem it solves”, related
 - [ ] Phone PDPs — battery health + IMEI/warranty panel
-- [ ] Add to cart → `/cart` + header badge
+- [ ] Add to cart → `/cart` → `/checkout`
+- [ ] MoMo mock pay → confirmation **Paid** (via webhook)
+- [ ] `/track` with order # + phone
+- [ ] `/pre-order` deposit items
 - [ ] **No WhatsApp** “Ask a question” (number not configured)
 - [ ] Delivery copy: all Lusaka areas
 - [ ] Dark-first blue theme; motion + reduced-motion respected
